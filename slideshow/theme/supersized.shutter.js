@@ -27,7 +27,7 @@
     		if (api.options.autoplay){
     			if (api.options.progress_bar) theme.progressBar();
 			}else{
-				if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", vars.image_path + "play.png");	// If pause play button is image, swap src
+    		  if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", api.options.image_path + "play.png");	// If pause play button is image, swap src
 				if (api.options.progress_bar) $(vars.progress_bar).stop().css({left : -$(window).width()});	//  Place progress bar
 			}
 			
@@ -40,11 +40,11 @@
 			// Thumbnail Tray Toggle
 			$(vars.tray_button).toggle(function(){
 				$(vars.thumb_tray).stop().animate({bottom : 0, avoidTransforms : true}, 300 );
-				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-down.png");
+				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", api.options.image_path + "button-tray-down.png");
 				return false;
 			}, function() {
 				$(vars.thumb_tray).stop().animate({bottom : -$(vars.thumb_tray).height(), avoidTransforms : true}, 300 );
-				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", vars.image_path + "button-tray-up.png");
+				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", api.options.image_path + "button-tray-up.png");
 				return false;
 			});
 			
@@ -209,11 +209,11 @@
 	 		
 	 		if (state =='play'){
 	 			// If image, swap to pause
-	 			if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", vars.image_path + "pause.png");
+	 		  if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", api.options.image_path + "pause.png");
 				if (api.options.progress_bar && !vars.is_paused) theme.progressBar();
 	 		}else if (state == 'pause'){
 	 			// If image, swap to play
-	 			if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", vars.image_path + "play.png");
+	 		  if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", api.options.image_path + "play.png");
         		if (api.options.progress_bar && vars.is_paused)$(vars.progress_bar).stop().css({left : -$(window).width()});
 	 		}
 	 		
@@ -299,7 +299,6 @@
 		progress_delay		:	false,				// Delay after resize before resuming slideshow
 		thumb_page 			: 	false,				// Thumbnail page
 		thumb_interval 		: 	false,				// Thumbnail interval
-		image_path			:	'img/',				// Default image path
 													
 		// General Elements							
 		play_button			:	'#pauseplay',		// Play/Pause button
@@ -329,7 +328,8 @@
 	 $.supersized.themeOptions = {					
 	 						   
 		progress_bar		:	1,		// Timer for each slide											
-		mouse_scrub			:	0		// Thumbnails move with mouse
+		image_path: 'img/',				// Default image path
+		mouse_scrub: 0		// Thumbnails move with mouse
 		
 	 };
 	
