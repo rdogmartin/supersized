@@ -1,5 +1,5 @@
 /*
-
+	supersized.3.2.7.js
 	Supersized - Fullscreen Slideshow jQuery Plugin
 	Version : 3.2.7
 	Site	: www.buildinternet.com/project/supersized

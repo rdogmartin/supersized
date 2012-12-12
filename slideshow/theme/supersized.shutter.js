@@ -1,5 +1,5 @@
 /*
-
+	supersized.shutter.js
 	Supersized - Fullscreen Slideshow jQuery Plugin
 	Version : 3.2.7
 	Theme 	: Shutter 1.1
