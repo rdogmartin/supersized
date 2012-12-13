@@ -22,8 +22,8 @@
 				#play-button{ float:left; margin-top:1px;border-right:1px solid #333; background:url('../img/bg-hover.png') repeat-x 0 44px; }
 					#play-button:hover{ background-position:0 1px; cursor:pointer; }
 
-        .stop-button{ float:left; margin-top:1px;padding:10px;border-right:1px solid #333; background:url('../img/bg-hover.png') repeat-x 0 44px; }
-					.stop-button:hover{ background-position:0 1px; cursor:pointer; }
+        #stop-button{ float:left; margin-top:1px;padding:10px;border-right:1px solid #333; background:url('../img/bg-hover.png') repeat-x 0 44px; }
+					#stop-button:hover{ background-position:0 1px; cursor:pointer; }
 				
 				#prevslide, #nextslide{ position:absolute; height:43px; width:43px; top:50%; margin-top:-21px; opacity:0.6; }
 					#prevslide{ left:10px; background:url('../img/back.png'); }

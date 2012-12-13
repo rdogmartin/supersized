@@ -12,12 +12,9 @@
 
 (function($){
 
-	/* Place Supersized Elements
-	----------------------------*/
-    
-    
     $.supersized = function(options){
     	
+      // Place Supersized Elements
       $('body').append('<div id="supersized-loader"></div><ul id="supersized"></ul>');
       
     	/* Variables
@@ -211,7 +208,7 @@
 			
 			// Keyboard Navigation
 			if (base.options.keyboard_nav){
-				$(document.documentElement).keyup(function (event) {
+				$(document.documentElement).on('keyup.supersized', function (event) {
 				
 					if(vars.in_animation) return false;		// Abort if currently animating
 					
