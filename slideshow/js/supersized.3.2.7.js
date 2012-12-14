@@ -13,22 +13,11 @@
 (function($){
 
     $.supersized = function(options){
-    	
-      // Place Supersized Elements
-      $('body').append('<div id="supersized-loader"></div><ul id="supersized"></ul>');
       
     	/* Variables
 		----------------------------*/
-    	var el = '#supersized',
-        	base = this;
-        // Access to jQuery and DOM versions of element
-        base.$el = $(el);
-        base.el = el;
-        vars = $.supersized.vars;
-        // Add a reverse reference to the DOM object
-        base.$el.data("supersized", base);
-        api = base.$el.data('supersized');
-		
+        	var base = this;
+      
 		base.init = function(){
         	// Combine options and vars
         	$.supersized.vars = $.extend($.supersized.vars, $.supersized.themeVars);
@@ -49,6 +38,20 @@
 				markerContent,
 				thumbMarkers = '',
 				thumbImage;
+          
+
+          // Hide current page contents and add Supersized Elements
+        	$('body > *').hide().parent().append($($.supersized.vars.options.html_template), '<div id="supersized-loader"></div><ul id="supersized"></ul>');
+          
+          var el = '#supersized';
+          // Access to jQuery and DOM versions of element
+          base.$el = $(el);
+          base.el = el;
+          vars = $.supersized.vars;
+          // Add a reverse reference to the DOM object
+          base.$el.data("supersized", base);
+          api = base.$el.data('supersized');
+
 				
 			while(thisSlide <= base.options.slides.length-1){
 				//Determine slide link content
@@ -454,7 +457,25 @@
         /* Next Slide
 		----------------------------*/
 		base.nextSlide = function(){
-			
+		  if (base.options.slideshow && !vars.is_paused && base.options.auto_exit && (vars.current_slide == base.options.slides.length - 1)) {
+		    // We're on the last slide of a running slideshow where auto_exit is enabled, so exit.
+			  base.destroy();
+			  return false;
+			}
+		  
+				var old_slide_number = vars.current_slide;
+		  // Get the slide number of new slide
+				if (vars.current_slide < base.options.slides.length - 1) {
+				  vars.current_slide++;
+				} else if (base.options.loop) {
+				  vars.current_slide = 0;
+				}
+
+				if (old_slide_number == vars.current_slide) {
+				  vars.in_animation = false;
+				  return false;
+				}
+
 			if(vars.in_animation || !api.options.slideshow) return false;		// Abort if currently animating
 				else vars.in_animation = true;		// Otherwise set animation marker
 				
@@ -465,8 +486,6 @@
 				$('.prevslide').removeClass('prevslide');
 				liveslide.removeClass('activeslide').addClass('prevslide');	// Remove active class & update previous slide
 					
-			// Get the slide number of new slide
-			vars.current_slide + 1 == base.options.slides.length ? vars.current_slide = 0 : vars.current_slide++;
 			
 		    var nextslide = $(base.el+' li:eq('+vars.current_slide+')'),
 		    	prevslide = base.$el.find('.prevslide');
@@ -565,6 +584,19 @@
 		
 			if(vars.in_animation || !api.options.slideshow) return false;		// Abort if currently animating
 				else vars.in_animation = true;		// Otherwise set animation marker
+				
+				var old_slide_number = vars.current_slide;
+		  // Get current slide number
+				if (vars.current_slide > 0) {
+				  vars.current_slide--;
+				} else if (base.options.loop) {
+				  vars.current_slide = base.options.slides.length - 1;
+				}
+				
+      if (old_slide_number == vars.current_slide) {
+        vars.in_animation = false;
+        return false;
+      }
 			
 			clearInterval(vars.slideshow_interval);	// Stop slideshow
 			
@@ -572,10 +604,7 @@
 				liveslide = base.$el.find('.activeslide');		// Find active slide
 				$('.prevslide').removeClass('prevslide');
 				liveslide.removeClass('activeslide').addClass('prevslide');		// Remove active class & update previous slide
-			
-			// Get current slide number
-			vars.current_slide == 0 ?  vars.current_slide = base.options.slides.length - 1 : vars.current_slide-- ;
-				
+
 		    var nextslide =  $(base.el+' li:eq('+vars.current_slide+')'),
 		    	prevslide =  base.$el.find('.prevslide');
 			
@@ -693,7 +722,30 @@
     		
     	};
     	
-    	
+		/* Tear down this instance of supersized
+		----------------------------*/
+		base.destroy = function () {
+		  if (vars.in_animation || !api.options.slideshow) return;		// Abort if currently animating
+
+		  // Start slideshow if paused. Without this, the slideshow is paused and the play/pause button has the wrong icon
+		  // when the user clicks the 'start slideshow' button a second time.
+		  if (vars.is_paused)
+		    api.playToggle();
+
+		  clearInterval(vars.slideshow_interval);
+
+		  // Unbind events (requires jQuery 1.7+)
+		  $(document.documentElement).off('.supersized');
+		  $('.ssControlsContainer *').off('click');
+
+		  vars = null;
+		  api = null;
+
+		  // Remove slideshow DOM elements and restore the page.
+		  $('#supersized-loader,#supersized,.ssControlsContainer').remove();
+		  $('body > *').show();
+		};
+      
     	/* Go to specific slide
 		----------------------------*/
     	base.goTo = function(targetSlide){
@@ -840,7 +892,7 @@
 			// Resume slideshow
 			if (!vars.is_paused && base.options.slideshow){
 				vars.slideshow_interval = setInterval(base.nextSlide, base.options.slide_interval);
-				if (base.options.stop_loop && vars.current_slide == base.options.slides.length - 1 ) base.playToggle();
+				if (!base.options.loop && !base.options.auto_exit && vars.current_slide == base.options.slides.length - 1 ) base.playToggle();
 			}
 			
 			// Call theme function for after slide transition
@@ -887,8 +939,9 @@
     	// Functionality
 		slideshow               :   1,			// Slideshow on/off
 		autoplay				:	1,			// Slideshow starts playing automatically
-		start_slide             :   1,			// Start slide (0 is random)
-		stop_loop				:	0,			// Stops slideshow on last slide
+		auto_exit: 0,      // Exit the slideshow when the last slide is finished
+		start_slide: 1,			// Start slide (0 is random)
+		loop				:	1,			// Enables moving between the last and first slide.
 		random					: 	0,			// Randomize slide order (Ignores start slide)
 		slide_interval          :   5000,		// Length between transitions
 		transition              :   1, 			// 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left

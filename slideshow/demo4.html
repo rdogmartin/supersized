@@ -2,7 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
-  <!--
+<!--
     Supersized - Fullscreen Slideshow jQuery Plugin
     Version : 3.2.7
     Site	: www.buildinternet.com/project/supersized
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="css/supersized.css" type="text/css" media="screen" />
   <link rel="stylesheet" href="theme/supersized.shutter.css" type="text/css" media="screen" />
 
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
   <script type="text/javascript" src="js/jquery.easing.min.js"></script>
 
   <script type="text/javascript" src="js/supersized.3.2.7.js"></script>
@@ -32,9 +32,9 @@
   <script type="text/javascript">
 
     jQuery(function ($) {
-      
+
       $('#btnSlideShow').click(function () {
-        
+
         var ssTmpl = '\
 <div class="ssControlsContainer"> \
     <!--Thumbnail Navigation--> \
@@ -45,7 +45,7 @@
     <a id="prevslide" class="load-item"></a> \
     <a id="nextslide" class="load-item"></a> \
 \
-            <div id="thumb-tray" class="load-item"> \
+    <div id="thumb-tray" class="load-item"> \
       <div id="thumb-back"></div> \
       <div id="thumb-forward"></div> \
     </div> \
@@ -84,9 +84,6 @@
     </div> \
 </div> \
         ';
-        
-        // Hide all DOM elements in body, then append our slideshow controls.
-        $('body > *').hide().parent().append($(ssTmpl));
 
         $.supersized({
 
@@ -94,8 +91,9 @@
           image_path: 'img/',
           slideshow: 1,			// Slideshow on/off
           autoplay: 1,			// Slideshow starts playing automatically
+          auto_exit: 1,      // Exit the slideshow when the last slide is finished
           start_slide: 1,			// Start slide (0 is random)
-          stop_loop: 0,			// Pauses slideshow on last slide
+          loop: 0,			// Enables moving between the last and first slide.
           random: 0,			// Randomize slide order (Ignores start slide)
           slide_interval: 3000,		// Length between transitions
           transition: 6, 			// 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
@@ -133,34 +131,15 @@
 
           // Theme Options			   
           progress_bar: 1,			// Timer for each slide							
-          mouse_scrub: 0
+          mouse_scrub: 0,
+          html_template: ssTmpl // The HTML for the controls
+        });
 
+        // Exit slideshow when stop button is clicked.
+        $('#stop-button').on('click', function () {
+          api.destroy();
         });
-        
-        // Exit slideshow when stop button is clicked. Ideally, this functionality would be in the plug-in and additionally 
-        // refactored to be not quite so hacky, but I want to minimize the code changes in the source.
-        $('#stop-button').click(function () {
-          if (vars.in_animation || !api.options.slideshow) return;		// Abort if currently animating
-          
-          // Start slideshow if paused. Without this, the slideshow is paused and the play/pause button has the wrong icon
-          // when the user clicks the 'start slideshow' button a second time.
-          if (vars.is_paused)
-            api.playToggle();
-          
-          clearInterval(vars.slideshow_interval);
-          
-          // Unbind events (requires jQuery 1.7+)
-          $(document.documentElement).off('.supersized');
-          $('.ssControlsContainer *').off('click');
-          
-          vars = null;
-          api = null;
-          
-          // Remove slideshow DOM elements and restore the page.
-          $('#supersized-loader,#supersized,.ssControlsContainer').remove();
-          $('body > *').show();
-        });
-        
+
       });
     });
 
@@ -168,15 +147,21 @@
 
 </head>
 
-  <style type="text/css">
-    body {color:#fff;}
-  </style>
+<style type="text/css">
+  body { color: #fff; }
+</style>
 
 <body>
   <h1>Demo 4 - supersized jQuery plug-in</h1>
-  <p>This page demonstrates invoking a slide show on demand based on a slideshow template
-                 stored in javascript rather than as HTML on the web page.</p>
-  <p><button id="btnSlideShow" value="Start slide show">Start slide show</button></p>
-
+  <p>This page demonstrates the following features:</p>
+  <ul>
+    <li>Start a slideshow on demand</li>
+    <li>Prove new html_template option: Store the slideshow controls in a variable rather than as HTML</li>
+    <li>Prove auto_exit option: Exit the slide show when the last slide is finished</li>
+    <li>Prove loop option: User cannot move between first and last slide when loop=0</li>
+  </ul>
+  <p>&nbsp;</p>
+  <p>
+    <button id="btnSlideShow" value="Start slide show">Start slide show</button></p>
 </body>
 </html>
