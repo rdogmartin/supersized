@@ -11,6 +11,9 @@
 	
 */
 
+.ssControlsContainer ul {margin:0;padding:0;}
+.ssControlsContainer img {border:none;}
+
 	/* Controls Bar
 	----------------------------*/
 	#controls-wrapper { margin:0 auto; height:42px; width:100%; bottom:0px; left:0; z-index:4; background:url(../img/nav-bg.png) repeat-x; position:fixed; }
