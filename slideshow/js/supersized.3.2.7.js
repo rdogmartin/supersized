@@ -166,7 +166,7 @@
 			var img = $('<img src="'+api.getField('image')+'"/>');
 			
 			var slideCurrent= base.el+' li:eq('+vars.current_slide+')';
-			img.appendTo(slideCurrent).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading activeslide');
+			img.appendTo(slideCurrent).wrap('<a ' + imageLink + linkTarget + '></a>').parent().parent().addClass('image-loading activeslide').css('visibility', 'visible');
 			
 			img.load(function(){
 				base._origDim($(this));
@@ -202,7 +202,7 @@
 		----------------------------*/
 		base.launch = function(){
 		
-			base.$el.css('visibility','visible');
+			//base.$el.css('visibility','visible'); // This line breaks Chrome mobile, so don't include it
 			$('#supersized-loader').remove();		//Hide loading animation
 			
 			// Call theme function for before slide transition
