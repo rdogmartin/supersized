@@ -38,7 +38,7 @@
 			/* Thumbnail Tray
 			----------------------------*/
 			// Hide tray off screen
-			$(vars.thumb_tray).css({bottom : -$(vars.thumb_tray).height()});
+			$(vars.thumb_tray).css({bottom : -$(vars.thumb_tray).outerHeight()});
 			
 			// Thumbnail Tray Toggle
 			$(vars.tray_button).toggle(function(){
@@ -46,7 +46,7 @@
 				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", api.options.image_path + "button-tray-down.png");
 				return false;
 			}, function() {
-				$(vars.thumb_tray).stop().animate({bottom : -$(vars.thumb_tray).height(), avoidTransforms : true}, 300 );
+			  $(vars.thumb_tray).stop().animate({ bottom: -$(vars.thumb_tray).outerHeight(), avoidTransforms: true }, 300);
 				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", api.options.image_path + "button-tray-up.png");
 				return false;
 			});
