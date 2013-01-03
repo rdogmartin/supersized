@@ -34,7 +34,7 @@
 						#prevslide:active, #nextslide:active{ margin-top:-19px; }
 						#prevslide:hover, #nextslide:hover{ cursor:pointer; }
 				
-				ul#slide-list{ padding:15px 0; float:left; position:absolute; left:50%; }
+				ul#slide-list{ display:none;padding:15px 0; float:left; position:absolute; right:55px; }
 					ul#slide-list li{ list-style:none; width:12px; height:12px; float:left; margin:0 5px 0 0; }
 						ul#slide-list li.current-slide a, ul#slide-list li.current-slide a:hover{ background-position:0 0px; }
 						ul#slide-list li a{ display:block; width:12px; height:12px; background:url('../img/nav-dot.png') no-repeat 0 -24px; }
@@ -43,7 +43,8 @@
 				#tray-button{ float:right; margin-top:1px; border-left:1px solid #333; background:url('../img/bg-hover.png') repeat-x 0 44px; }
 					#tray-button:hover{ background-position:0 1px; cursor:pointer; }
 		
-	
+      @media screen and (min-width:800px) { ul#slide-list { display: block;}}
+
 	/* Progress Bar
 	----------------------------*/					
 	#progress-back{ z-index:5; position:fixed; bottom:42px; left:0; height:8px; width:100%; background:url('../img/progress-back.png') repeat-x; }

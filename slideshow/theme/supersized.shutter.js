@@ -25,10 +25,13 @@
 	 		
 			// Start progressbar if autoplay enabled
     		if (api.options.autoplay){
-    			if (api.options.progress_bar) theme.progressBar();
+    		  if (api.options.progress_bar) theme.progressBar(); else $(vars.progress_bar).parent().hide();
 			}else{
     		  if ($(vars.play_button).attr('src')) $(vars.play_button).attr("src", api.options.image_path + "play.png");	// If pause play button is image, swap src
-				if (api.options.progress_bar) $(vars.progress_bar).stop().css({left : -$(window).width()});	//  Place progress bar
+    		  if (api.options.progress_bar)
+    		    $(vars.progress_bar).stop().css({ left: -$(window).width() });	//  Place progress bar
+    		  else
+    		    $(vars.progress_bar).parent().hide();
 			}
 			
 			
