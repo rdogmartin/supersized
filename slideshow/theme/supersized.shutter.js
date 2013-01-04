@@ -20,9 +20,13 @@
 		----------------------------*/
 	 	_init : function(){
 	 		
-	 		// Center Slide Links
-	 		if (api.options.slide_links) $(vars.slide_list).css('margin-left', -$(vars.slide_list).width()/2);
-	 		
+	 		// Configure Slide Links
+	 	  if (api.options.slide_links) {
+	 	    // Note: This code is repeated in the resize event, so if you change it here do it there, too.
+	 	    var maxSlideListWidth = $(vars.slide_list).parent().width() - 300; // Constrain the slide bullets area width so they don't cover buttons
+	 	    $(vars.slide_list).css('margin-left', -$(vars.slide_list).width() / 2).css('max-width', maxSlideListWidth);
+	 		}
+	 	  
 			// Start progressbar if autoplay enabled
     		if (api.options.autoplay){
     		  if (api.options.progress_bar) theme.progressBar(); else $(vars.progress_bar).parent().hide();
@@ -190,6 +194,14 @@
 						$(vars.thumb_back +','+vars.thumb_forward).fadeOut('fast');
 					}
 					
+				}
+			  
+			  // Configure Slide Links
+				if (api.options.slide_links) {
+				  // Note: This code is repeated in the _init function, so if you change it here do it there, too.
+				  maxSlideListWidth = $(vars.slide_list).parent().width() - 300; // Constrain the slide bullets area width so they don't cover buttons
+				  $(vars.slide_list).css('margin-left', -$(vars.slide_list).width() / 2).css('max-width', maxSlideListWidth);
+				  console.log(maxSlideListWidth);
 				}
 			});	
 			
