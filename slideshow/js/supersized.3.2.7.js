@@ -158,7 +158,7 @@
 				}
 			} else {
 				// Slideshow turned off if there is only one slide
-				base.options.slideshow = 0;
+				//base.options.slideshow = 0; //[RDM] Commented out because this disables buttons when there is only one slide
 			}
 			
 			// Set current image
