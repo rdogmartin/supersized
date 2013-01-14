@@ -132,8 +132,11 @@
           // Theme Options			   
           progress_bar: 1,			// Timer for each slide							
           mouse_scrub: 0,
-          html_template: ssTmpl // The HTML for the controls
-        });
+          html_template: ssTmpl, // The HTML for the controls
+          on_destroy: function () {
+            if (console) console.log('Slide show ended');
+        }
+      });
 
         // Exit slideshow when stop button is clicked.
         $('#stop-button').on('click', function () {

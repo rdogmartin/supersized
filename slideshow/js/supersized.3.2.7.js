@@ -41,8 +41,9 @@
           
 
           // Hide current page contents and add Supersized Elements
-        	$('body > *').hide().parent().append($($.supersized.vars.options.html_template), '<div id="supersized-loader"></div><ul id="supersized"></ul>');
-          
+        	$('body').children(':visible').hide().addClass('supersized_hidden');
+        	$('body').append($($.supersized.vars.options.html_template), '<div id="supersized-loader"></div><ul id="supersized"></ul>');
+
           var el = '#supersized';
           // Access to jQuery and DOM versions of element
           base.$el = $(el);
@@ -743,7 +744,10 @@
 
 		  // Remove slideshow DOM elements and restore the page.
 		  $('#supersized-loader,#supersized,.ssControlsContainer').remove();
-		  $('body > *').show();
+		  $('body .supersized_hidden').show().removeClass('supersized_hidden');
+
+		  // Trigger on_destroy event
+		  base.options.on_destroy.apply();
 		};
       
     	/* Go to specific slide
@@ -965,8 +969,9 @@
 		// Components							
 		slide_links				:	1,			// Individual links for each slide (Options: false, 'num', 'name', 'blank')
 		thumb_links				:	1,			// Individual thumb links for each slide
-		thumbnail_navigation    :   0			// Thumbnail navigation
-    	
+		thumbnail_navigation: 0,			// Thumbnail navigation
+		on_destroy: function () { } // Empty implementation for on_destroy event, may be overridden by user
+
     };
     
     $.fn.supersized = function(options){
