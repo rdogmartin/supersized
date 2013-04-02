@@ -23,7 +23,7 @@
 	 		// Configure Slide Links
 	 	  if (api.options.slide_links) {
 	 	    // Note: This code is repeated in the resize event, so if you change it here do it there, too.
-	 	    var maxSlideListWidth = $(vars.slide_list).parent().width() - 300; // Constrain the slide bullets area width so they don't cover buttons
+	 	    var maxSlideListWidth = $(vars.slide_list).parent().width() - 400; // Constrain the slide bullets area width so they don't cover buttons
 	 	    $(vars.slide_list).css('margin-left', -$(vars.slide_list).width() / 2).css('max-width', maxSlideListWidth);
 	 		}
 	 	  
@@ -199,7 +199,7 @@
 			  // Configure Slide Links
 				if (api.options.slide_links) {
 				  // Note: This code is repeated in the _init function, so if you change it here do it there, too.
-				  maxSlideListWidth = $(vars.slide_list).parent().width() - 300; // Constrain the slide bullets area width so they don't cover buttons
+				  maxSlideListWidth = $(vars.slide_list).parent().width() - 400; // Constrain the slide bullets area width so they don't cover buttons
 				  $(vars.slide_list).css('margin-left', -$(vars.slide_list).width() / 2).css('max-width', maxSlideListWidth);
 				  console.log(maxSlideListWidth);
 				}
