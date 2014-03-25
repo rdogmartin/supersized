@@ -740,6 +740,8 @@
 		  $(document.documentElement).off('.supersized');
 		  $('.ssControlsContainer *').off('click');
 
+		  var currentSlideId = vars.options.slides[vars.current_slide].id;
+
 		  vars = null;
 		  api = null;
 
@@ -748,7 +750,7 @@
 		  $('body .supersized_hidden').show().removeClass('supersized_hidden');
 
 		  // Trigger on_destroy event
-		  base.options.on_destroy.apply();
+		  base.options.on_destroy.apply(null, [currentSlideId]);
 		};
       
     	/* Go to specific slide
