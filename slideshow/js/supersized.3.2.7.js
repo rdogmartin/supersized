@@ -49,6 +49,7 @@
           base.$el = $(el);
           base.el = el;
           vars = $.supersized.vars;
+          vars.$container = base.$el;
           // Add a reverse reference to the DOM object
           base.$el.data("supersized", base);
           api = base.$el.data('supersized');

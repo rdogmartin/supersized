@@ -112,6 +112,15 @@
 		    	api.prevSlide();
 		    });
 		    
+            // Add touchscreen support for wiping left and right. Requires existence of touchwipe library (http://www.netcu.de/jquery-touchwipe-iphone-ipad-library)
+			var isTouchScreen = !!('ontouchstart' in window) || !!navigator.msMaxTouchPoints;
+            if (isTouchScreen && $.fn.touchwipe) {
+                vars.$container.touchwipe({
+                    wipeLeft: function () { api.nextSlide(); },
+                    wipeRight: function() { api.prevSlide(); }
+                }); 
+            }
+
 		    	// Full Opacity on Hover
 		    	if(jQuery.support.opacity){
 			    	$(vars.prev_slide +','+vars.next_slide).mouseover(function() {
