@@ -14,6 +14,12 @@
 
     $.supersized = function(options){
       
+        // If caller requested the api variable, return it. It is unfortunately a global variable, so this isn't really necessary, but TypeScript
+        // doesn't like it when you invoke variables that aren't properly defined, so we added this function.
+        if (options === 'getApi') {
+            return api;
+        }
+        
     	/* Variables
 		----------------------------*/
         	var base = this;
