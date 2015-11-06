@@ -45,13 +45,18 @@
 			$(vars.thumb_tray).css({bottom : -($(vars.thumb_tray).outerHeight() + 5)});
 			
 			// Thumbnail Tray Toggle
-			$(vars.tray_button).toggle(function(){
-				$(vars.thumb_tray).stop().animate({bottom : 0, avoidTransforms : true}, 300 );
-				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", api.options.image_path + "button-tray-down.png");
-				return false;
-			}, function() {
-			  $(vars.thumb_tray).stop().animate({ bottom: -($(vars.thumb_tray).outerHeight() + 5), avoidTransforms: true }, 300);
-				if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", api.options.image_path + "button-tray-up.png");
+			$(vars.tray_button).click(function(e) {
+				var isExpanded = $(e.currentTarget).data('isExpanded') || false;
+			
+				if (isExpanded) {
+					$(vars.thumb_tray).stop().animate({ bottom: -($(vars.thumb_tray).outerHeight() + 5), avoidTransforms: true }, 300);
+					if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", api.options.image_path + "button-tray-up.png");
+				} else {
+					$(vars.thumb_tray).stop().animate({ bottom: 0, avoidTransforms: true }, 300);
+					if ($(vars.tray_arrow).attr('src')) $(vars.tray_arrow).attr("src", api.options.image_path + "button-tray-down.png");
+				}
+				$(e.currentTarget).data('isExpanded', !isExpanded);
+			            
 				return false;
 			});
 			
