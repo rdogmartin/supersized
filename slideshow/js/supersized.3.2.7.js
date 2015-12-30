@@ -468,7 +468,7 @@
 		base.nextSlide = function(){
 		  if (base.options.slideshow && !vars.is_paused && base.options.auto_exit && (vars.current_slide == base.options.slides.length - 1)) {
 		    // We're on the last slide of a running slideshow where auto_exit is enabled, so exit.
-			  base.destroy();
+			  base.destroy(true);
 			  return false;
 			}
 		  
@@ -733,7 +733,7 @@
     	
 		/* Tear down this instance of supersized
 		----------------------------*/
-		base.destroy = function () {
+		base.destroy = function (causedByAutoExit) {
 		  if (vars.in_animation || !api.options.slideshow) return;		// Abort if currently animating
 
 		  // Start slideshow if paused. Without this, the slideshow is paused and the play/pause button has the wrong icon
@@ -757,7 +757,7 @@
 		  $('body .supersized_hidden').show().removeClass('supersized_hidden');
 
 		  // Trigger on_destroy event
-		  base.options.on_destroy.apply(null, [currentSlideId]);
+		  base.options.on_destroy.apply(null, [currentSlideId, causedByAutoExit || false]);
 		};
       
     	/* Go to specific slide
