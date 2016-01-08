@@ -756,6 +756,8 @@
 		  $('#supersized-loader,#supersized,.ssControlsContainer').remove();
 		  $('body .supersized_hidden').show().removeClass('supersized_hidden');
 
+		  $(window).off('resize');
+
 		  // Trigger on_destroy event
 		  base.options.on_destroy.apply(null, [currentSlideId, causedByAutoExit || false]);
 		};
